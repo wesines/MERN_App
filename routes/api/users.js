@@ -12,7 +12,7 @@ const User = require('../../models/Users');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const { json } = require('express');
 
-//route    Get api/users
+//route    Post api/users
 //@desc    Test user
 //@access  Public
 //router.get('/', (req, res) => res.send('User route'));

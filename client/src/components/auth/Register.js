@@ -50,10 +50,10 @@ const Register = () => {
         const config = {
           headers: { 'Content-Type': 'application/json' },
         };
+        console.log('body', body.password);
+        const body = JSON.stringify(formData);
 
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post('/localhost:5000/api/users', body, config);
+        const res = await axios.post('/api/users', body, config);
         console.log('res', res.data);
       } catch (err) {
         console.log('erreur axios', err);

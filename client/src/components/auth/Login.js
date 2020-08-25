@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { Component, Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 const Login = () => {
-  /*
-  //for states, an object that contains fields values : formData
-  //function we ll used to update fields
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -12,29 +10,57 @@ const Login = () => {
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-};
-return (
-  <Fragment>
-    <h1 className='large text-primary'>Registration</h1>
-    <p className='lead'>
-      <i className='fas fa-user'></i> Create Your Account
-    </p>
-    <form className='form' onSubmit={(e) => onSubmit(e)}>
-      <div className='form-group'>
-        <input type='text' placeholder='FirstName' name='firstname' required />
-      </div>
-      <div className='form-group'>
-        <input
-          type='text'
-          placeholder='LastName'
-          name='lastname'
-          value={lastname}
-          onChange={(e) => onChange(e)}
-          required
-        />
-      </div>
-    </form>
-  </Fragment>
-);*/
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log('header');
+      const config = {
+        headers: { 'Content-Type': 'application/json' },
+      };
+      const newUser = {
+        email,
+        password,
+      };
+      const body = JSON.stringify(newUser);
+      const res = await axios.post('/register', body, config);
+      console.log('res', res.data);
+    } catch (err) {
+      console.log('erreur axios', err);
+    }
+  };
+  return (
+    <Fragment>
+      <h1 className='large text-primary'>Sign In</h1>
+      <p className='lead'>
+        <i className='fas fa-user'></i>Sign into your account
+      </p>
+      <form className='form' onSubmit={(e) => onSubmit(e)}>
+        <div className='form-group'>
+          <input
+            type='email'
+            placeholder='Email Address'
+            name='email'
+            value={email}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='password'
+            placeholder='Password'
+            name='password'
+            value={password}
+            onChange={(e) => onChange(e)}
+            minLength='6'
+          />
+        </div>
+        <input type='submit' className='btn btn-primary' value='Login' />
+      </form>
+      <p className='my-1'>
+        Don't have an account <Link to='/register'>Sign Up</Link>
+      </p>
+    </Fragment>
+  );
 };
 export default Login;
