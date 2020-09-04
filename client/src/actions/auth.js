@@ -5,6 +5,7 @@ import { REGISTER_SUCCESS, REGISTER_FAIL } from './types';
 // register User
 export const register = ({
   firstname,
+  lastname,
   email,
   password,
   picture,
@@ -21,6 +22,7 @@ export const register = ({
 
   const body = JSON.stringify({
     firstname,
+    lastname,
     email,
     password,
     picture,

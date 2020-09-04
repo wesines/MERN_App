@@ -26,12 +26,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   subscribe: {
-    type: String,
-    default: 'false',
+    type: Boolean,
+    default: false,
   },
   readterms: {
-    type: String,
-    default: 'true',
+    type: Boolean,
+    default: true,
   },
 });
 // Methods

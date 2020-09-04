@@ -9,6 +9,7 @@ const axios = require('axios');
 import { setAlert } from '../../actions/alert';
 //la fonction register de l'action auth
 import { register } from '../../actions/auth';
+import e from 'express';
 
 const Register = ({ setAlert, register }) => {
   //for states, an object that contains fields values : formData
@@ -21,8 +22,8 @@ const Register = ({ setAlert, register }) => {
     password2: '',
     picture: '',
     status: '',
-    readterms: '',
-    subscribe: '',
+    readterms: false,
+    subscribe: false,
   });
   const {
     lastname,
@@ -32,27 +33,47 @@ const Register = ({ setAlert, register }) => {
     password2,
     picture,
     status,
-    subscribe,
     readterms,
+    subscribe,
   } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // const [Checked, setChecked] = React.useState(undefined);
+  // const handlecheck = (e) => {
+  //  this.setformData({ readterms: e.target.checked });
+  // };
+  const onChange = (e) => {
+    // console.log('subscribe', subscribe);
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const setCheckedSubs = (e) => {
+    setFormData({
+      [readterms]: e.target.checked,
+    });
+  };
+  const setCheckedTerms = (e) => {
+    setFormData({
+      [readterms]: e.target.checked,
+    });
+  };
   const onSubmit = async (e) => {
+    //pour que la page ne se recharge pas
     e.preventDefault();
 
     if (formData.password !== formData.password2) {
       setAlert('password do not match ', 'danger');
     } else {
-      console.log('body dans register =', firstname, email, password);
+      console.log('body dans register =', firstname);
       register({
         firstname,
+        lastname,
         email,
         password,
         picture,
         status,
-        subscribe,
         readterms,
+        subscribe,
       });
       /*   try {
         const config = {
@@ -146,20 +167,17 @@ const Register = ({ setAlert, register }) => {
           Subscribed
           <input
             type='checkbox'
-            placeholder='subscribe'
-            name='subscribe'
-            value={subscribe}
-            onChange={(e) => onChange(e)}
+            checked={subscribe}
+            onChange={(e) => setCheckedSubs(e)}
           />
         </div>
         Terms read
         <div className='form-group'>
           <input
             type='checkbox'
-            placeholder='readterms'
-            name='readterms'
-            value={readterms}
-            onChange={(e) => onChange(e)}
+            checked={readterms}
+            // onChange={(e) => handlecheck(e)}
+            onChange={(e) => setCheckedTerms(e)}
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
