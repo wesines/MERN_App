@@ -16,7 +16,6 @@ const { json } = require('express');
 //@desc    Test user
 //@access  Public
 //router.get('/', (req, res) => res.send('User route'));
-
 router.post(
   '/',
   [
@@ -28,7 +27,10 @@ router.post(
       'Veillez entrer un mot de passe ayant au minimum 6 caractères'
     ).isLength({ min: 6 }),
   ],
+
   async (req, res) => {
+    console.log('here i am in users server node');
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -42,7 +44,7 @@ router.post(
       subscribe,
       readterms,
     } = req.body;
-
+    console.log('req.body=', req.body);
     try {
       //See if user exists
       let user = await User.findOne({ email });
@@ -65,7 +67,7 @@ router.post(
         subscribe,
         readterms,
       });
-      console.log('user' + user);
+      console.log('user here is ' + user);
 
       //Encrypt password
       const salt = await bcrypt.genSalt(10);

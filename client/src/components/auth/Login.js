@@ -13,21 +13,7 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      console.log('header');
-      const config = {
-        headers: { 'Content-Type': 'application/json' },
-      };
-      const newUser = {
-        email,
-        password,
-      };
-      const body = JSON.stringify(newUser);
-      const res = await axios.post('/register', body, config);
-      console.log('res', res.data);
-    } catch (err) {
-      console.log('erreur axios', err);
-    }
+    console.log('SUCCESS');
   };
   return (
     <Fragment>

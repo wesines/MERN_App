@@ -21,21 +21,17 @@ const UserSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: true,
   },
   avatar: {
     type: String,
-    required: true,
   },
   subscribe: {
-    type: Boolean,
-    required: true,
-    default: false,
+    type: String,
+    default: 'false',
   },
   readterms: {
     type: String,
-    required: true,
-    default: true,
+    default: 'true',
   },
 });
 // Methods

@@ -1,7 +1,16 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+/* eslint-disable import/first */
+// eslint-disable-next-line no-restricted-globals
+// eslint-disable-next-line
 const axios = require('axios');
-const Register = () => {
+import { setAlert } from '../../actions/alert';
+//la fonction register de l'action auth
+import { register } from '../../actions/auth';
+
+const Register = ({ setAlert, register }) => {
   //for states, an object that contains fields values : formData
   //function we ll used to update fields
   const [formData, setFormData] = useState({
@@ -12,7 +21,7 @@ const Register = () => {
     password2: '',
     picture: '',
     status: '',
-    readtermes: '',
+    readterms: '',
     subscribe: '',
   });
   const {
@@ -25,7 +34,7 @@ const Register = () => {
     status,
     subscribe,
     readterms,
-  } = FormData;
+  } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,31 +42,30 @@ const Register = () => {
     e.preventDefault();
 
     if (formData.password !== formData.password2) {
-      console.log('password do not match ');
+      setAlert('password do not match ', 'danger');
     } else {
-      const newUser = {
+      console.log('body dans register =', firstname, email, password);
+      register({
         firstname,
-        lastname,
-        status,
-        picture,
         email,
         password,
+        picture,
+        status,
         subscribe,
         readterms,
-      };
-      try {
-        console.log('header');
+      });
+      /*   try {
         const config = {
           headers: { 'Content-Type': 'application/json' },
         };
-        console.log('body', body.password);
-        const body = JSON.stringify(formData);
 
+        const body = JSON.stringify(formData);
+        console.log('body', body);
         const res = await axios.post('/api/users', body, config);
         console.log('res', res.data);
       } catch (err) {
         console.log('erreur axios', err);
-      }
+      }*/
     }
   };
   return (
@@ -72,7 +80,7 @@ const Register = () => {
             type='text'
             placeholder='FirstName'
             name='firstname'
-            required
+            onChange={(e) => onChange(e)}
           />
         </div>
         <div className='form-group'>
@@ -82,7 +90,6 @@ const Register = () => {
             name='lastname'
             value={lastname}
             onChange={(e) => onChange(e)}
-            required
           />
         </div>
         <div className='form-group'>
@@ -164,4 +171,9 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  //ptfr et entree
+  register: PropTypes.func.isRequired,
+};
+export default connect(null, { setAlert, register })(Register);
