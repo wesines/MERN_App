@@ -2,14 +2,13 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { MDBInput, MDBFormInline } from 'mdbreact';
 /* eslint-disable import/first */
 // eslint-disable-next-line no-restricted-globals
 // eslint-disable-next-line
-const axios = require('axios');
 import { setAlert } from '../../actions/alert';
 //la fonction register de l'action auth
 import { register } from '../../actions/auth';
-import e from 'express';
 
 const Register = ({ setAlert, register }) => {
   //for states, an object that contains fields values : formData
@@ -36,27 +35,15 @@ const Register = ({ setAlert, register }) => {
     readterms,
     subscribe,
   } = formData;
-  // const [Checked, setChecked] = React.useState(undefined);
-  // const handlecheck = (e) => {
-  //  this.setformData({ readterms: e.target.checked });
-  // };
+
   const onChange = (e) => {
-    // console.log('subscribe', subscribe);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    console.log('change', subscribe);
   };
-  const setCheckedSubs = (e) => {
-    setFormData({
-      [readterms]: e.target.checked,
-    });
-  };
-  const setCheckedTerms = (e) => {
-    setFormData({
-      [readterms]: e.target.checked,
-    });
-  };
+
   const onSubmit = async (e) => {
     //pour que la page ne se recharge pas
     e.preventDefault();
@@ -75,18 +62,6 @@ const Register = ({ setAlert, register }) => {
         readterms,
         subscribe,
       });
-      /*   try {
-        const config = {
-          headers: { 'Content-Type': 'application/json' },
-        };
-
-        const body = JSON.stringify(formData);
-        console.log('body', body);
-        const res = await axios.post('/api/users', body, config);
-        console.log('res', res.data);
-      } catch (err) {
-        console.log('erreur axios', err);
-      }*/
     }
   };
   return (
@@ -101,6 +76,7 @@ const Register = ({ setAlert, register }) => {
             type='text'
             placeholder='FirstName'
             name='firstname'
+            required
             onChange={(e) => onChange(e)}
           />
         </div>
@@ -110,6 +86,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='LastName'
             name='lastname'
             value={lastname}
+            required
             onChange={(e) => onChange(e)}
           />
         </div>
@@ -119,6 +96,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='Email Address'
             name='email'
             value={email}
+            required
             onChange={(e) => onChange(e)}
           />
           <small className='form-text'>
@@ -132,6 +110,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='Password'
             name='password'
             value={password}
+            required
             onChange={(e) => onChange(e)}
             minLength='6'
           />
@@ -142,6 +121,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='Confirm Password'
             name='password2'
             value={password2}
+            required
             onChange={(e) => onChange(e)}
             minLength='6'
           />
@@ -156,6 +136,7 @@ const Register = ({ setAlert, register }) => {
         </div>
         <div className='form-group'>
           <input
+            style={{ marginLeft: -10 }}
             type='file'
             placeholder='picture'
             name='picture'
@@ -163,23 +144,59 @@ const Register = ({ setAlert, register }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <div className='form-group'>
-          Subscribed
+        <div
+          className='custom-control custom-checkbox custom-control-inline'
+          className='form-group'
+        >
           <input
+            className='custom-control-input'
+            id='defaultInline1'
+            //  style={{ marginLeft: -510 }}
             type='checkbox'
-            checked={subscribe}
-            onChange={(e) => setCheckedSubs(e)}
+            name='nomSub'
+            checked={formData.subscribe}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                subscribe: e.target.checked,
+              })
+            }
           />
+
+          <label
+            className='custom-control-label'
+            htmlFor='defaultInline1'
+            style={{ marginLeft: 20 }}
+          >
+            Subcribe to our newsletter
+          </label>
         </div>
-        Terms read
-        <div className='form-group'>
+        <div
+          className='custom-control custom-checkbox custom-control-inline'
+          className='form-group'
+        >
           <input
+            className='custom-control-input'
+            id='defaultInline2'
+            name='nomRead'
             type='checkbox'
-            checked={readterms}
-            // onChange={(e) => handlecheck(e)}
-            onChange={(e) => setCheckedTerms(e)}
+            checked={formData.readterms}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                readterms: e.target.checked,
+              })
+            }
           />
+          <label
+            className='custom-control-label'
+            htmlFor='defaultInline2'
+            style={{ marginLeft: 20 }}
+          >
+            Accepts the terms and conditions
+          </label>
         </div>
+
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
       <p className='my-1'>
