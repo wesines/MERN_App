@@ -4,8 +4,8 @@ const initialState = [];
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
-  console.log('action=', action);
-  switch (action) {
+
+  switch (type) {
     case SET_ALERT:
       return [...state, payload];
     case REMOVE_ALERT:

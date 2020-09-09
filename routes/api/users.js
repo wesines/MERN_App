@@ -15,17 +15,18 @@ const { json } = require('express');
 //route    Post api/users
 //@desc    Test user
 //@access  Public
-//router.get('/', (req, res) => res.send('User route'));
+//router.post('/', (req, res) => res.send('User route'));
 router.post(
   '/',
   [
-    check('firstname', 'Le prénom est obligatoire').not().isEmpty(),
-    check('lastname', 'Le nom est obligatoire').not().isEmpty(),
-    check('email', 'Veuillez entrer un email valide').isEmail(),
-    check(
-      'password',
-      'Veillez entrer un mot de passe ayant au minimum 6 caractères'
-    ).isLength({ min: 6 }),
+    check('firstname', 'Firstname is required, please enter it')
+      .not()
+      .isEmpty(),
+    check('lastname', 'Lastname is required, please enter it').not().isEmpty(),
+    check('email', 'Email is required, please enter a valid one').isEmail(),
+    check('password', 'Password must have 6 characters at least').isLength({
+      min: 6,
+    }),
   ],
 
   async (req, res) => {
@@ -49,7 +50,10 @@ router.post(
       //See if user exists
       let user = await User.findOne({ email });
       if (user) {
-        res.status(400).json({ errors: ['msg: Utilisateur déjà existant'] });
+        //  console.log('user already exists');
+        return res
+          .status(400)
+          .json({ errors: ['msg: user is already existant'] });
       }
       //Get user picture
       const avatar = gravatar.url(email, {

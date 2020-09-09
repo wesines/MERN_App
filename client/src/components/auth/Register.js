@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { MDBInput, MDBFormInline } from 'mdbreact';
 /* eslint-disable import/first */
@@ -10,7 +10,7 @@ import { setAlert } from '../../actions/alert';
 //la fonction register de l'action auth
 import { register } from '../../actions/auth';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   //for states, an object that contains fields values : formData
   //function we ll used to update fields
   const [formData, setFormData] = useState({
@@ -41,7 +41,6 @@ const Register = ({ setAlert, register }) => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    console.log('change', subscribe);
   };
 
   const onSubmit = async (e) => {
@@ -51,7 +50,6 @@ const Register = ({ setAlert, register }) => {
     if (formData.password !== formData.password2) {
       setAlert('password do not match ', 'danger');
     } else {
-      console.log('body dans register =', firstname);
       register({
         firstname,
         lastname,
@@ -64,6 +62,10 @@ const Register = ({ setAlert, register }) => {
       });
     }
   };
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
+
   return (
     <Fragment>
       <h1 className='large text-primary'>Registration</h1>
@@ -76,7 +78,7 @@ const Register = ({ setAlert, register }) => {
             type='text'
             placeholder='FirstName'
             name='firstname'
-            required
+            //   required
             onChange={(e) => onChange(e)}
           />
         </div>
@@ -86,7 +88,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='LastName'
             name='lastname'
             value={lastname}
-            required
+            //   required
             onChange={(e) => onChange(e)}
           />
         </div>
@@ -96,7 +98,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='Email Address'
             name='email'
             value={email}
-            required
+            //   required
             onChange={(e) => onChange(e)}
           />
           <small className='form-text'>
@@ -110,7 +112,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='Password'
             name='password'
             value={password}
-            required
+            //  required
             onChange={(e) => onChange(e)}
             minLength='6'
           />
@@ -121,7 +123,7 @@ const Register = ({ setAlert, register }) => {
             placeholder='Confirm Password'
             name='password2'
             value={password2}
-            required
+            //   required
             onChange={(e) => onChange(e)}
             minLength='6'
           />
@@ -193,7 +195,7 @@ const Register = ({ setAlert, register }) => {
             htmlFor='defaultInline2'
             style={{ marginLeft: 20 }}
           >
-            Accepts the terms and conditions
+            I have read terms and conditions
           </label>
         </div>
 
@@ -205,10 +207,14 @@ const Register = ({ setAlert, register }) => {
     </Fragment>
   );
 };
-
+//ptfr et entree
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  //ptfr et entree
   register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
-export default connect(null, { setAlert, register })(Register);
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+export default connect(mapStateToProps, { setAlert, register })(Register);

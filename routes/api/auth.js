@@ -29,7 +29,10 @@ router.post('/', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     // error from passport middleware
     if (err) {
-      return res.status(400).json(err);
+      console.log('erreur  passport middelware');
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'verify your email and/or password' }] });
     }
     // registered user
     else if (user) {
@@ -38,7 +41,7 @@ router.post('/', (req, res, next) => {
           id: user.id,
         },
       };
-
+      console.log('user authentifié ');
       jwt.sign(
         payload,
         config.get('jwtSecret'),
@@ -51,7 +54,10 @@ router.post('/', (req, res, next) => {
     }
     // unknown user or wrong password
     else {
-      return res.status(404).json(info);
+      console.log('unknown user or wrong password');
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'verify your email and/or password' }] });
     }
   })(req, res);
 });
