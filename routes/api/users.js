@@ -1,9 +1,13 @@
 const express = require('express');
+const app = express();
+
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const bodyParser = require('body-parser');
+
 const auth = require('../../middelware/auth');
 var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -30,8 +34,6 @@ router.post(
   ],
 
   async (req, res) => {
-    console.log('here i am in users server node');
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -45,7 +47,6 @@ router.post(
       subscribe,
       readterms,
     } = req.body;
-    console.log('req.body=', req.body);
     try {
       //See if user exists
       let user = await User.findOne({ email });
@@ -71,7 +72,6 @@ router.post(
         subscribe,
         readterms,
       });
-      console.log('user here is ' + user);
 
       //Encrypt password
       const salt = await bcrypt.genSalt(10);
@@ -101,52 +101,10 @@ router.post(
     }
   }
 );
-/*
-router.put(
-  '/:id',
-  [
-    auth,
-    check('firstname', 'Firstname is required, please enter it')
-      .not()
-      .isEmpty(),
-  ],
-  (req, res, next) => {
-    console.log('  req.params.id==', req.params.id);
-    if (!ObjectId.isValid(req.params.id))
-      return res.status(400).send(`No record with given id : ${req.params.id}`);
-    //  let user = User.findOne({ user: req.params.id });
-    //  console.log('user update', user);
-    const user = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      status: req.body.status,
-      subscribe: req.body.subscribe,
-      avatar: req.body.avatar,
-      email: req.body.email,
-      password: req.body.password,
-      readterms: req.body.readterms,
-    };
-    console.log('req bu id=', req.body);
-    User.findByIdAndUpdate(
-      req.params.id,
-      { $set: user },
-      { new: true },
-      (err, doc) => {
-        if (!err) {
-          res.send(doc);
-        } else
-          console.log(
-            'Error in User update:' + JSON.stringify(err, undefined, 2)
-          );
 
-        return next();
-      }
-    );
-    res.json(user);
-  }
-);*/
-
-router.post('/:id', (req, res) => {
+router.post('/:id', auth, (req, res) => {
+  console.log('  reqbody', req.params.id);
+  console.log('  reqbody', req.body);
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id : ${req.params.id}`);
   var user = {
@@ -159,10 +117,6 @@ router.post('/:id', (req, res) => {
     email: req.body.email,
   };
   console.log('  reqbody', req.body);
-  /*{new:true} : it returns all updated data of employee back to the response
-  si elle est true le parametre doc va avoir toutes les donnees de l'updated employee
-  si elle est false elle aura les données de l'employeur intitilaes
-  */
   User.findByIdAndUpdate(
     req.params.id,
     { $set: user },
@@ -178,14 +132,12 @@ router.post('/:id', (req, res) => {
     }
   );
 });
+
 router.get('/:id', (req, res) => {
-  console.log('get user/id');
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id : ${req.params.id}`);
   User.findById(req.params.id, (err, doc) => {
     if (!err) {
-      console.log('get user/id doc===', doc);
-
       res.send(doc);
     } else {
       console.log('Error in retrieving User:' + JSON.stringify, 2);
@@ -200,7 +152,6 @@ router.get('/', async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (err) {
-    console.error('err.message', err.message);
     res.status(500).send('Server Error');
   }
 });

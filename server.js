@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const connectDB = require('./config/db');
+const bodyParser = require('body-parser');
+
 const { use } = require('./routes/api/auth');
 const { json } = require('express');
 require('./middelware/passportConfig');
@@ -8,7 +10,8 @@ const passport = require('passport');
 
 //connect Database
 connectDB();
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // Init middelware
 app.use(express.json({ extended: false }));
 

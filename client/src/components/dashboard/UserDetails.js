@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-import { getDetailUserById, editUser } from '../../actions/listUsers';
+import { getDetailUserById } from '../../actions/listUsers';
+
+import { editUser } from '../../actions/listUsers';
 
 export const UserDetails = ({
   getDetailUserById,
@@ -13,22 +15,46 @@ export const UserDetails = ({
   match,
 }) => {
   const [formData, setFormData] = useState({
+    lastname: '',
     firstname: '',
+    email: '',
+    avatar: '',
+    status: '',
+    readterms: false,
+    subscribe: false,
   });
-  const { firstname } = formData;
+
+  const {
+    lastname,
+    firstname,
+    email,
+    avatar,
+    status,
+    readterms,
+    subscribe,
+  } = formData;
   const onChange = (e) => {
-    console.log('change me');
+    console.log('firstname', firstname);
+    console.log('e.target.name', e.target.name);
+    console.log('e.target.value', e.target.value);
     setFormData({
       ...formData,
+      lastname: detailUser.lastname,
+      email: detailUser.email,
+      avatar: detailUser.avatar,
+      status: detailUser.status,
+      readterms: detailUser.readterms,
+      subscribe: detailUser.subscribe,
       [e.target.name]: e.target.value,
     });
   };
-
   const onSubmit = async (e) => {
     //pour que la page ne se recharge pas
     e.preventDefault();
-    console.log('formDtata', formData);
-    editUser(formData._id);
+    console.log('formdata.email', formData.email);
+    console.log('formdata.firstname', formData.firstname);
+    console.log('formDtata.id', detailUser._id);
+    editUser(detailUser._id, formData);
   };
 
   useEffect(() => {
@@ -130,4 +156,6 @@ const mapStateToProps = (state) => ({
   detailUser: state.detailUser,
   listUsers: state.listUsers,
 });
-export default connect(mapStateToProps, { getDetailUserById })(UserDetails);
+export default connect(mapStateToProps, { editUser, getDetailUserById })(
+  UserDetails
+);

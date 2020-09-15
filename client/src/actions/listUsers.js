@@ -31,7 +31,7 @@ export const getListUsers = () => async (dispatch) => {
 // Get profile by ID
 export const getDetailUserById = (userId) => async (dispatch) => {
   try {
-    const res = await await api.get(`/api/users/${userId}`);
+    const res = await api.get(`/api/users/${userId}`);
     console.log('res', res);
     dispatch({
       type: GET_USER_DETAIL,
@@ -46,15 +46,16 @@ export const getDetailUserById = (userId) => async (dispatch) => {
 };
 
 // Update user
-export const editUser = (userId) => async (dispatch) => {
+export const editUser = (userId, formdata) => async (dispatch) => {
   try {
-    const res = await await api.put(`/api/users/${userId}`);
+    console.log('I am in edituser Action formdata = ' + formdata.firstname);
+    console.log('I am in edituser Action id = ' + userId);
+    const res = await axios.post(`/api/users/${userId}`, formdata);
     console.log('res', res);
     dispatch({
       type: GET_USER_DETAIL,
       payload: res.data,
     });
-
     dispatch(setAlert('Profile Updated', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
