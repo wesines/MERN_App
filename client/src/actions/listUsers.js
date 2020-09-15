@@ -48,8 +48,6 @@ export const getDetailUserById = (userId) => async (dispatch) => {
 // Update user
 export const editUser = (userId, formdata) => async (dispatch) => {
   try {
-    console.log('I am in edituser Action formdata = ' + formdata.firstname);
-    console.log('I am in edituser Action id = ' + userId);
     const res = await axios.post(`/api/users/${userId}`, formdata);
     console.log('res', res);
     dispatch({

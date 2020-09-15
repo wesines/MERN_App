@@ -51,9 +51,7 @@ export const UserDetails = ({
   const onSubmit = async (e) => {
     //pour que la page ne se recharge pas
     e.preventDefault();
-    console.log('formdata.email', formData.email);
     console.log('formdata.firstname', formData.firstname);
-    console.log('formDtata.id', detailUser._id);
     editUser(detailUser._id, formData);
   };
 
