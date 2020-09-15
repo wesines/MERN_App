@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import FileUpload from './Fileuploaded/FileUpload';
 import 'bootstrap/dist/css/bootstrap.min.css';
 /* eslint-disable import/first */
 // eslint-disable-next-line no-restricted-globals

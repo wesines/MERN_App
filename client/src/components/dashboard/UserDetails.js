@@ -119,12 +119,11 @@ export const UserDetails = ({
                 <form className='form' onSubmit={(e) => onSubmit(e)}>
                   <div className='form-group'>
                     <input
-                      type='firstname'
-                      placeholder='Email Address'
+                      type='text'
+                      placeholder='First Name'
                       name='firstname'
-                      value={detailUser.firstname}
-                      //   required
-                      onChange={(e) => onChange(e)}
+                      value={firstname}
+                      onChange={onChange}
                     />
                   </div>
                   <div>
