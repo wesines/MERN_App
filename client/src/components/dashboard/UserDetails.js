@@ -85,30 +85,29 @@ export const UserDetails = ({
                 <span> {detailUser.status}</span>
               </li>
             </ul>
-            <p>
-              <ul>
-                {!detailUser.subscribe ? (
-                  <li className='text-info'>
-                    <i className='far fa-clone'>Subscribed</i>
-                  </li>
-                ) : (
-                  <li className='text-info'>
-                    {' '}
-                    <i className='fas fa-clone'>Subscribed</i>
-                  </li>
-                )}
-                {!detailUser.readterms ? (
-                  <li className='text-info'>
-                    <i className='far fa-clone'>Terms are read</i>
-                  </li>
-                ) : (
-                  <li className='text-info'>
-                    {' '}
-                    <i className='fas fa-clone'>Terms are read</i>
-                  </li>
-                )}
-              </ul>
-            </p>
+
+            <ul>
+              {!detailUser.subscribe ? (
+                <li className='text-info'>
+                  <i className='far fa-clone'>Subscribed</i>
+                </li>
+              ) : (
+                <li className='text-info'>
+                  {' '}
+                  <i className='fas fa-clone'>Subscribed</i>
+                </li>
+              )}
+              {!detailUser.readterms ? (
+                <li className='text-info'>
+                  <i className='far fa-clone'>Terms are read</i>
+                </li>
+              ) : (
+                <li className='text-info'>
+                  {' '}
+                  <i className='fas fa-clone'>Terms are read</i>
+                </li>
+              )}
+            </ul>
           </div>
           {auth.isAuthenticated &&
             auth.loading === false &&

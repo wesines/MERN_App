@@ -27,7 +27,7 @@ export const Dashboard = ({
         <div className='profiles'>
           {listUsers.length > 0 ? (
             listUsers.map((list) => (
-              <div className='profile bg-light'>
+              <div key={list._id} className='profile bg-light'>
                 <img src={list.avatar} alt='' className='round-img' />
                 <div>
                   <h2>{list.lastname}</h2>

@@ -73,7 +73,9 @@ export const register = ({
     const errors = err.response.data.errors;
     if (errors) {
       console.log('error.msg', errors);
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) =>
+        dispatch(setAlert(' mail is already used', 'danger'))
+      );
 
       dispatch({
         type: REGISTER_FAIL,

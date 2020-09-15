@@ -102,36 +102,45 @@ router.post(
   }
 );
 
-router.post('/:id', auth, (req, res) => {
-  console.log('  reqbody', req.params.id);
-  console.log('  reqbody', req.body);
-  if (!ObjectId.isValid(req.params.id))
-    return res.status(400).send(`No record with given id : ${req.params.id}`);
-  var user = {
-    firstname: req.body.firstname,
-    status: req.body.status,
-    avatar: req.body.avatar,
-    subscribe: req.body.subscribe,
-    readterms: req.body.readterms,
-    lastname: req.body.lastname,
-    email: req.body.email,
-  };
-  console.log('  reqbody', req.body);
-  User.findByIdAndUpdate(
-    req.params.id,
-    { $set: user },
-    { new: true },
-    (err, doc) => {
-      if (!err) {
-        res.send(doc);
-      } else {
-        console.log(
-          'Error in user update:' + JSON.stringify(err, undefined, 2)
-        );
+router.post(
+  '/:id',
+  [
+    auth,
+    check('firstname', 'Firstname is required, please enter it')
+      .not()
+      .isEmpty(),
+  ],
+  (req, res) => {
+    console.log('  reqbody', req.params.id);
+    console.log('  reqbody', req.body);
+    if (!ObjectId.isValid(req.params.id))
+      return res.status(400).send(`No record with given id : ${req.params.id}`);
+    var user = {
+      firstname: req.body.firstname,
+      status: req.body.status,
+      avatar: req.body.avatar,
+      subscribe: req.body.subscribe,
+      readterms: req.body.readterms,
+      lastname: req.body.lastname,
+      email: req.body.email,
+    };
+    console.log('  reqbody', req.body);
+    User.findByIdAndUpdate(
+      req.params.id,
+      { $set: user },
+      { new: true },
+      (err, doc) => {
+        if (!err) {
+          res.send(doc);
+        } else {
+          console.log(
+            'Error in user update:' + JSON.stringify(err, undefined, 2)
+          );
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 router.get('/:id', (req, res) => {
   if (!ObjectId.isValid(req.params.id))
