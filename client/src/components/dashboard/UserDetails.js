@@ -17,6 +17,7 @@ export const UserDetails = ({
   });
   const { firstname } = formData;
   const onChange = (e) => {
+    console.log('change me');
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
