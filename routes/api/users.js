@@ -101,22 +101,68 @@ router.post(
     }
   }
 );
+/*
+router.put(
+  '/:id',
+  [
+    auth,
+    check('firstname', 'Firstname is required, please enter it')
+      .not()
+      .isEmpty(),
+  ],
+  (req, res, next) => {
+    console.log('  req.params.id==', req.params.id);
+    if (!ObjectId.isValid(req.params.id))
+      return res.status(400).send(`No record with given id : ${req.params.id}`);
+    //  let user = User.findOne({ user: req.params.id });
+    //  console.log('user update', user);
+    const user = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      status: req.body.status,
+      subscribe: req.body.subscribe,
+      avatar: req.body.avatar,
+      email: req.body.email,
+      password: req.body.password,
+      readterms: req.body.readterms,
+    };
+    console.log('req bu id=', req.body);
+    User.findByIdAndUpdate(
+      req.params.id,
+      { $set: user },
+      { new: true },
+      (err, doc) => {
+        if (!err) {
+          res.send(doc);
+        } else
+          console.log(
+            'Error in User update:' + JSON.stringify(err, undefined, 2)
+          );
 
-router.put('/user/:id', auth, (req, res, next) => {
-  console.log('hello');
+        return next();
+      }
+    );
+    res.json(user);
+  }
+);*/
+
+router.post('/:id', (req, res) => {
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id : ${req.params.id}`);
-  let user = User.findOne({ user: req.params.id });
-  user = {
+  var user = {
     firstname: req.body.firstname,
-    lastname: req.body.lastname,
     status: req.body.status,
-    subscribe: req.body.subscribe,
     avatar: req.body.avatar,
-    email: req.body.email,
-    password: req.body.password,
+    subscribe: req.body.subscribe,
     readterms: req.body.readterms,
+    lastname: req.body.lastname,
+    email: req.body.email,
   };
+  console.log('  reqbody', req.body);
+  /*{new:true} : it returns all updated data of employee back to the response
+  si elle est true le parametre doc va avoir toutes les donnees de l'updated employee
+  si elle est false elle aura les données de l'employeur intitilaes
+  */
   User.findByIdAndUpdate(
     req.params.id,
     { $set: user },
@@ -124,21 +170,22 @@ router.put('/user/:id', auth, (req, res, next) => {
     (err, doc) => {
       if (!err) {
         res.send(doc);
-      } else
+      } else {
         console.log(
-          'Error in User update:' + JSON.stringify(err, undefined, 2)
+          'Error in user update:' + JSON.stringify(err, undefined, 2)
         );
-
-      return next();
+      }
     }
   );
-  res.json(user);
 });
-router.get('/user/:id', (req, res) => {
+router.get('/:id', (req, res) => {
+  console.log('get user/id');
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id : ${req.params.id}`);
   User.findById(req.params.id, (err, doc) => {
     if (!err) {
+      console.log('get user/id doc===', doc);
+
       res.send(doc);
     } else {
       console.log('Error in retrieving User:' + JSON.stringify, 2);
@@ -153,7 +200,7 @@ router.get('/', async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (err) {
-    console.error(err.message);
+    console.error('err.message', err.message);
     res.status(500).send('Server Error');
   }
 });

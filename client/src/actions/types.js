@@ -13,3 +13,8 @@ export const LOGOUT = 'LOGOUT';
 
 export const ERROR_LIST_USER = 'ERROR_LIST_USER';
 export const GET_LIST_USERS = 'GET_LIST_USERS';
+
+export const DETAIL_USER_ERROR = 'DETAIL_USER_ERROR';
+export const GET_USER_DETAIL = 'GET_USER_DETAIL';
+
+export const CLEAR_USER = 'CLEAR_USER';

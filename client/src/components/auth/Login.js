@@ -22,12 +22,12 @@ const Login = ({ login, isAuthenticated }) => {
 
   // redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/users' />;
   }
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign In</h1>
-      <p className='lead'>
+      <h1 className='text-info'>Sign In</h1>
+      <p className=' font-size: 1.5rem,  margin-bottom: 1rem;'>
         <i className='fas fa-user'></i>Sign into your account
       </p>
       <form className='form' onSubmit={(e) => onSubmit(e)}>

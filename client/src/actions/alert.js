@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { SET_ALERT, REMOVE_ALERT } from './types';
 //to dispatch more than action we can do an arroaw dispatch and another for the body
+//we can dispatch it thanks to thunk middelware
 export const setAlert = (msg, alertType) => (dispatch) => {
   const id = uuidv4();
   dispatch({

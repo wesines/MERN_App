@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { MDBInput, MDBFormInline } from 'mdbreact';
+import 'bootstrap/dist/css/bootstrap.min.css';
 /* eslint-disable import/first */
 // eslint-disable-next-line no-restricted-globals
 // eslint-disable-next-line
@@ -19,7 +19,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     email: '',
     password: '',
     password2: '',
-    picture: '',
+    avatar: '',
     status: '',
     readterms: false,
     subscribe: false,
@@ -28,9 +28,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     lastname,
     firstname,
     email,
+    avatar,
     password,
     password2,
-    picture,
     status,
     readterms,
     subscribe,
@@ -54,8 +54,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         firstname,
         lastname,
         email,
+        avatar,
         password,
-        picture,
         status,
         readterms,
         subscribe,
@@ -63,13 +63,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     }
   };
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/users' />;
   }
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Registration</h1>
-      <p className='lead'>
+      <h1 className='text-info'>Registration</h1>
+      <p className=' font-size: 1.5rem,  margin-bottom: 1rem;'>
         <i className='fas fa-user'></i> Create Your Account
       </p>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
@@ -136,16 +136,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <option value='Student'>Student</option>
           </select>
         </div>
-        <div className='form-group'>
-          <input
-            style={{ marginLeft: -10 }}
-            type='file'
-            placeholder='picture'
-            name='picture'
-            value={picture}
-            onChange={(e) => onChange(e)}
-          />
-        </div>
+
         <div
           className='custom-control custom-checkbox custom-control-inline'
           className='form-group'
@@ -218,3 +209,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(mapStateToProps, { setAlert, register })(Register);
+//connect has two arguments:
+// any  state that you want to map you can put null
+// an object that with any action you wanna use

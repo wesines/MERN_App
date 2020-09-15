@@ -9,6 +9,7 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  CLEAR_USER,
 } from './types';
 
 import setAuthToken from '../utils/setAuthToken';
@@ -37,7 +38,7 @@ export const register = ({
   lastname,
   email,
   password,
-  picture,
+  avatar,
   status,
   subscribe,
   readterms,
@@ -54,7 +55,7 @@ export const register = ({
     lastname,
     email,
     password,
-    picture,
+    avatar,
     status,
     subscribe,
     readterms,
@@ -71,10 +72,13 @@ export const register = ({
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
+      console.log('error.msg', errors);
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
 
       dispatch({
         type: REGISTER_FAIL,
+        //   payload: { msg: ' user is already existant', alertType },
+        //  payload: { msg: ' user is already existant' },
       });
     }
   }
@@ -98,10 +102,6 @@ export const login = (email, password) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    console.log('err login', err);
-    console.log('err.response', err.response);
-    console.log('err.response.data', err.response.data);
-
     const errors = err.response.data.errors;
 
     if (errors) {
@@ -117,5 +117,6 @@ export const login = (email, password) => async (dispatch) => {
 
 //LOGOUT
 export const logout = () => (dispatch) => {
+  dispatch({ type: CLEAR_USER });
   dispatch({ type: LOGOUT });
 };

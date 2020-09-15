@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const Alert = ({ alerts }) =>
+  //make sure it s not null an make sure there are actually sthg in the array
+  //cette expression && && if then (je pense)
   alerts !== null &&
   alerts.length > 0 &&
   alerts.map((alert) => (

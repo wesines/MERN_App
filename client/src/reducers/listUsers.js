@@ -1,7 +1,14 @@
-import { GET_LIST_USERS, ERROR_LIST_USER } from '../actions/types';
+import {
+  GET_LIST_USERS,
+  ERROR_LIST_USER,
+  CLEAR_USER,
+  GET_USER_DETAIL,
+  DETAIL_USER_ERROR,
+} from '../actions/types';
 
 const initialState = {
-  listUsers: null,
+  detailUser: null,
+  listUsers: [],
   loading: true,
   error: {},
 };
@@ -13,7 +20,7 @@ export default function (state = initialState, action) {
     case GET_LIST_USERS:
       return {
         ...state,
-        payload: payload,
+        listUsers: payload,
         loading: false,
       };
     case ERROR_LIST_USER:
@@ -21,6 +28,27 @@ export default function (state = initialState, action) {
         ...state,
         error: payload,
         loading: false,
+      };
+    case GET_USER_DETAIL:
+      return {
+        ...state,
+        detailUser: payload,
+        loading: false,
+      };
+    case DETAIL_USER_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false,
+        detailUser: null,
+      };
+
+    case CLEAR_USER:
+      return {
+        ...state,
+        listUsers: [],
+        loading: false,
+        detailUser: null,
       };
     default:
       return state;
