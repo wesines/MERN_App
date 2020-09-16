@@ -32,7 +32,7 @@ export const getListUsers = () => async (dispatch) => {
 export const getDetailUserById = (userId) => async (dispatch) => {
   try {
     const res = await api.get(`/api/users/${userId}`);
-    console.log('res', res);
+    //console.log('res', res);
     dispatch({
       type: GET_USER_DETAIL,
       payload: res.data,

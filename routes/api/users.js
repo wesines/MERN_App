@@ -6,8 +6,7 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const bodyParser = require('body-parser');
-
+const normalize = require('normalize-url');
 const auth = require('../../middelware/auth');
 var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -26,8 +25,12 @@ router.post(
     check('firstname', 'Firstname is required, please enter it')
       .not()
       .isEmpty(),
-    check('lastname', 'Lastname is required, please enter it').not().isEmpty(),
+    //check('lastname', 'Lastname is required, please enter it').not().isEmpty(),
     check('email', 'Email is required, please enter a valid one').isEmail(),
+    check(
+      'readterms',
+      'Check Terms and condition have to be read please'
+    ).isIn([true]),
     check('password', 'Password must have 6 characters at least').isLength({
       min: 6,
     }),
@@ -57,11 +60,15 @@ router.post(
           .json({ errors: ['msg: user is already existant'] });
       }
       //Get user picture
-      const avatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm',
-      });
+      const avatar = normalize(
+        gravatar.url(email, {
+          s: '200',
+          r: 'pg',
+          d: 'mm',
+        }),
+        { forceHttps: true }
+      );
+
       user = new User({
         firstname,
         lastname,
@@ -111,8 +118,8 @@ router.post(
       .isEmpty(),
   ],
   (req, res) => {
-    console.log('  reqbody', req.params.id);
-    console.log('  reqbody', req.body);
+    //  console.log('  reqbody', req.params.id);
+    // console.log('  reqbody', req.body);
     if (!ObjectId.isValid(req.params.id))
       return res.status(400).send(`No record with given id : ${req.params.id}`);
     var user = {
@@ -124,7 +131,7 @@ router.post(
       lastname: req.body.lastname,
       email: req.body.email,
     };
-    console.log('  reqbody', req.body);
+    // console.log('  reqbody', req.body);
     User.findByIdAndUpdate(
       req.params.id,
       { $set: user },

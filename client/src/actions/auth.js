@@ -60,10 +60,10 @@ export const register = ({
     subscribe,
     readterms,
   });
-  console.log('auth body =', body);
+  //console.log('auth body =', body);
   try {
     const res = await axios.post('/api/users', body, config);
-    console.log('res=', res);
+    //  console.log('res=', res);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -72,10 +72,12 @@ export const register = ({
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      console.log('error.msg', errors);
-      errors.forEach((error) =>
+      // console.log('error.msg', errors);
+
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      /*  errors.forEach((error) =>
         dispatch(setAlert(' mail is already used', 'danger'))
-      );
+      );*/
 
       dispatch({
         type: REGISTER_FAIL,

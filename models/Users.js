@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
   },
   lastname: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -22,12 +21,12 @@ const UserSchema = new mongoose.Schema({
   status: {
     type: String,
   },
-  picture: {
+  avatar: {
     type: String,
   },
   subscribe: {
     type: Boolean,
-    default: false,
+    //  default: false,
   },
   readterms: {
     type: Boolean,

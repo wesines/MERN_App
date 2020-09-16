@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import FileUpload from './Fileuploaded/FileUpload';
 import 'bootstrap/dist/css/bootstrap.min.css';
 /* eslint-disable import/first */
 // eslint-disable-next-line no-restricted-globals
@@ -145,7 +144,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           <input
             className='custom-control-input'
             id='defaultInline1'
-            //  style={{ marginLeft: -510 }}
             type='checkbox'
             name='nomSub'
             checked={formData.subscribe}
@@ -172,7 +170,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           <input
             className='custom-control-input'
             id='defaultInline2'
-            name='nomRead'
+            name='readterms'
             type='checkbox'
             checked={formData.readterms}
             onChange={(e) =>
