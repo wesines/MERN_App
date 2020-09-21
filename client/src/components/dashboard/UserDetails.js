@@ -15,13 +15,7 @@ export const UserDetails = ({
   match,
 }) => {
   const [formData, setFormData] = useState({
-    lastname: '',
     firstname: '',
-    email: '',
-    avatar: '',
-    status: '',
-    readterms: false,
-    subscribe: false,
   });
 
   const {
@@ -34,9 +28,9 @@ export const UserDetails = ({
     subscribe,
   } = formData;
   const onChange = (e) => {
-    console.log('firstname', firstname);
-    console.log('e.target.name', e.target.name);
-    console.log('e.target.value', e.target.value);
+    //console.log('firstname', firstname);
+    // console.log('e.target.name', e.target.name);
+    // console.log('e.target.value', e.target.value);
     setFormData({
       ...formData,
       lastname: detailUser.lastname,
@@ -57,6 +51,7 @@ export const UserDetails = ({
 
   useEffect(() => {
     getDetailUserById(match.params.id);
+    //   var detailUser = detailUser;
   }, [loading, getDetailUserById]);
 
   return (
@@ -145,6 +140,7 @@ UserDetails.propTypes = {
   getDetailUserById: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   editUser: PropTypes.func.isRequired,
+  detailUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
