@@ -7,13 +7,13 @@ import {
   ERROR_LIST_USER,
   GET_USER_DETAIL,
   DETAIL_USER_ERROR,
-  CLEAR_USER,
+  CLEAR_PROFILE,
 } from './types';
 
 //Get Users List
 
 export const getListUsers = () => async (dispatch) => {
-  dispatch({ type: CLEAR_USER });
+  dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await axios.get('/api/users');
     dispatch({

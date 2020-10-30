@@ -6,6 +6,7 @@ import { Redirect, Route } from 'react-router-dom';
 const PrivateRoute = ({
   component: Component,
   auth: { isAuthenticated, loading },
+  //we wanna get any other parameter so we do the spread operator ...
   ...rest
 }) => (
   <Route

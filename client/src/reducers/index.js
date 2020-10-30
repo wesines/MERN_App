@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import alert from './alert';
 import auth from './auth';
-import listUsers from './listUsers';
+import profile from './profile';
 
-export default combineReducers({ alert, auth, listUsers });
+export default combineReducers({ alert, auth, profile });

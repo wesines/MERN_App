@@ -150,6 +150,7 @@ router.post(
 );
 
 router.get('/:id', (req, res) => {
+  console.log('get user by id', req.params.id);
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id : ${req.params.id}`);
   User.findById(req.params.id, (err, doc) => {

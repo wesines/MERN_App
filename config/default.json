@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://ines123:ines123@cluster0.diizs.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "jwtSecret": "mySecrettoken"
+  "jwtSecret": "mySecrettoken",
+  "githubClientId": "033e50762438c48bd504",
+  "githubSecret": "4dfc83a641dd94e7f901631090bc471a187370ff"
 }

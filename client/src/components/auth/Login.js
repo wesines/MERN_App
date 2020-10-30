@@ -1,6 +1,5 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, {  Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import axios from 'axios';
 import { login } from '../../actions/auth';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -22,7 +21,7 @@ const Login = ({ login, isAuthenticated }) => {
 
   // redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to='/users' />;
+    return <Redirect to='/dashboard' />;
   }
   return (
     <Fragment>

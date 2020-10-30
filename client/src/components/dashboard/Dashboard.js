@@ -1,59 +1,75 @@
 import React, { useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getListUsers } from '../../actions/listUsers';
+import { getCurrentProfile,deleteAccount } from '../../actions/profile';
 import { PropTypes } from 'prop-types';
-
+import Experience from './Experience';
 import Spinner from '../layout/Spinner';
+import Education from './Education';
 
-export const Dashboard = ({
-  getListUsers,
+
+const Dashboard = ({
+  getCurrentProfile,
+  deleteAccount,
   auth: { user },
-  listUsers: { listUsers, loading },
+  profile: { profile, loading },
 }) => {
   useEffect(() => {
-    getListUsers();
+    getCurrentProfile();
   }, []);
-  console.log('hello', listUsers);
-  return loading && listUsers === null ? (
+
+  return loading && profile === null ? (
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='text-info'>Users</h1>
-      <div className='  font-size: 1.5rem,  margin-bottom: 1rem;'>
-        <i className='fas fa-user'></i>
-        welcome {user && user.firstname + ' ' + user.lastname}
-        <br />
-        <div className='profiles'>
-          {listUsers.length > 0 ? (
-            listUsers.map((list) => (
-              <div key={list._id} className='profile bg-light'>
-                <img src={list.avatar} alt='' className='round-img' />
-                <div>
-                  <h2>{list.lastname}</h2>
-
-                  <Link to={`/users/${list._id}`} className='btn btn-primary'>
-                    View Profile
-                  </Link>
-                </div>
-              </div>
-            ))
-          ) : (
-            <h4>No users found...</h4>
-          )}
+      <h1 className='text-info'>Dashboard</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Welcome {user && user.firstname+' '+user.lastname}
+      </p>
+      {profile !== null ? (
+        <Fragment>
+  <div className='dash-buttons'>
+      <Link to='/edit-profile' className='btn btn-light'>
+        <i className='fas fa-user-circle text-info' /> Edit Profile
+      </Link>
+      <Link to='/add-experience' className='btn btn-light'>
+        <i className='fab fa-black-tie text-info' /> Add Experience
+      </Link>
+      <Link to='/add-education' className='btn btn-light'>
+        <i className='fas fa-graduation-cap text-info' /> Add Education
+      </Link>
+    </div>     
+    
+    <Experience experience={profile.experience}/>
+    <Education education={profile.education}/>
+        <div className="my-2">
+          <button className='btn btn-danger' onClick={()=>deleteAccount()}>
+            <i className="fas fa-user-minus"></i> Delete my account
+          </button>
         </div>
-      </div>
+          </Fragment>
+      ) : (
+        <Fragment>
+          <p> You have not yet setup a profile, please add some info</p>
+          <Link to='/create-profile' className='btn btn-primary my-1'>
+            Create Profile
+          </Link>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
 
 Dashboard.propTypes = {
-  getListUsers: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  listUsers: PropTypes.object.isRequired,
+  deleteAccount:PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  listUsers: state.listUsers,
+  //anything will to this state reducer will be into this component
+  profile: state.profile,
 });
-export default connect(mapStateToProps, { getListUsers })(Dashboard);
+
+export default connect(mapStateToProps, {deleteAccount, getCurrentProfile })(Dashboard);
