@@ -138,8 +138,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         </div>
 
         <div
-          className='custom-control custom-checkbox custom-control-inline'
-          className='form-group'
+          className='form-group custom-control custom-checkbox custom-control-inline'
+         
         >
           <input
             className='custom-control-input'
@@ -164,8 +164,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           </label>
         </div>
         <div
-          className='custom-control custom-checkbox custom-control-inline'
-          className='form-group'
+          className='form-group custom-control custom-checkbox custom-control-inline'
         >
           <input
             className='custom-control-input'

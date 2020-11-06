@@ -1,7 +1,7 @@
 //racfp
 import React,{Fragment,useState} from 'react'
 //with router because redirecting in the action file
-import {Link, withRouter} from 'react-router-dom'
+import {Link,withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {addEducation} from '../../actions/profile'
@@ -56,8 +56,7 @@ const AddEducation = ({addEducation,history}) => {
           <h4>From Date</h4>
           <input type="date" name="from" value={from}  onChange={e=>onChange(e)} />
         </div>
-         <div  className='custom-control custom-checkbox custom-control-inline'
-          className='form-group'>
+         <div  className=' form-group custom-control custom-checkbox custom-control-inline'>
           <input className='custom-control-input' id='defaultInline1' type="checkbox" name="current" checked={current} value={current}  
           onChange={
               e=>{
@@ -92,4 +91,4 @@ AddEducation.propTypes = {
 addEducation:PropTypes.func.isRequired,
 }
 //we add the action addexpereince to connect 
-export default connect(null,{addEducation})(AddEducation)
+export default connect(null,{addEducation})(withRouter(AddEducation));

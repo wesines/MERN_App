@@ -51,7 +51,7 @@ const EditProfile = ({
 
     //remember that useeffect it ill keep reloading we wanna put some brakets here[]
     //and the prop that i want to depend on is the loading
-  }, [loading]);
+  }, [loading,getCurrentProfile]);
 
   const {
     company,
@@ -78,8 +78,8 @@ const EditProfile = ({
 
   return (
     <Fragment>
-      <h1 class='large text-info'>Create Your Profile</h1>
-      <p class='lead'>
+      <h1 className='large text-info'>Create Your Profile</h1>
+      <p className='lead'>
         <i class='fas fa-user'></i> Let's get some information to make your
         profile stand out
       </p>
