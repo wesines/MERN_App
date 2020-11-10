@@ -8,12 +8,13 @@ import { PROFILE_ERROR,ACCOUNT_DELETED,GET_REPOS,
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/profile/me');
-    console.log(" getCurrentProfile",res)
+   
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
     });
   } catch (err) {
+    dispatch({ type: CLEAR_PROFILE });
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
