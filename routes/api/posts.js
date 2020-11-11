@@ -61,9 +61,9 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/:id', auth, async (req, res) => {
   try {
-    console.log('id', req.params.id);
+   
     const post = await Post.findById(req.params.id);
-    console.log('posts', post);
+   
     if (!post) return res.status(404).json({ msg: 'Post not found' });
     res.json(post);
   } catch (err) {
@@ -86,9 +86,9 @@ router.delete('/:id', auth, async (req, res) => {
     //check user
     // the user is not equal to the request id  we put tostring
     //because one is an object and the other is a string
-    console.log('post.user.toString', post.user.toString);
+   
 
-    console.log('req.user.id', req.user.id);
+    
 
     if (post.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'user not authorizied' });
@@ -173,7 +173,7 @@ router.post(
     try {
       const user = await User.findById(req.user.id).select('-password');
       const post = await Post.findById(req.params.id);
-      console.log('posts', post);
+     
       const newComment = {
         text: req.body.text,
         firstname: user.firstname,

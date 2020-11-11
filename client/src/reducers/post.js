@@ -1,12 +1,11 @@
-import {    GET_POSTS,    POST_ERROR, UPDATE_LIKES, DELETE_POST ,ADD_POST}from '../actions/types'
+import {  ADD_COMMENT,REMOVE_COMMENT,  GET_POSTS, GET_POST,   POST_ERROR, UPDATE_LIKES, DELETE_POST ,ADD_POST}from '../actions/types'
 
-
-const initialState={
-    posts:[],
-    posts:null,
-    loading:true,
-    error:{}
-}
+const initialState = {
+    posts: [],
+    post: null,
+    loading: true,
+    error: {},
+  };
 
 
 export default function (state=initialState,action){
@@ -18,11 +17,19 @@ export default function (state=initialState,action){
             posts : payload,
             loading : false
         };
+        case GET_POST:
+            return{
+                ...state,
+//the post is just can be the payload because we are sending the single post
+// update that state 
+                post:payload,
+                payload:false
+            }
         case ADD_POST:
             return{
                  ...state,
                 //...state.post : just make a copy of it
-                post:[...state.post,payload],
+                posts: [...state.posts,payload ],
 //any component that uses the post part of the state it gonna ruturn
 //down with the post
                 loading:false,
@@ -57,6 +64,30 @@ export default function (state=initialState,action){
            loading:false,
             
         }
+        case ADD_COMMENT:
+            return{
+                ...state,
+                post: {...state.post,comments:payload },
+                loading:false
+            }
+      
+
+
+
+
+                case REMOVE_COMMENT:
+                    return {
+                      ...state,
+                      post: {
+                        ...state.post,
+                        comments: state.post.comments.filter(
+                          comment => comment._id !== payload
+                        )
+                      },
+                      loading: false
+                    };
+                
+
         default:
             return state;
     }
