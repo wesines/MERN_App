@@ -22,7 +22,7 @@ const Profile = ({
     useEffect(()=>{
         getProfileByID(match.params.id);
 
-    },[getProfileByID])
+    },[getProfileByID, match.params.id])
     return (
         <Fragment>
             {profile ===null || loading ?

@@ -1,4 +1,4 @@
-import React,{Fragment} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -41,7 +41,7 @@ const CommentItem = ({
 )
 
 CommentItem.propTypes = {
-postId:PropTypes.number.isRequired,
+postId:PropTypes.string.isRequired,
 comment:PropTypes.object.isRequired,
 auth:PropTypes.object.isRequired,
 deleteComment:PropTypes.func.isRequired,

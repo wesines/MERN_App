@@ -31,11 +31,12 @@ const ProfileTop = ({profile:{
  <i className="fab fa-twitter fa-2x"></i>
 </a>
     )}
-    {social && social.facebook && (
-  <a href="#" target="_blank" rel="noopener noreferrer">
-  <i className="fab fa-facebook fa-2x"></i>
-</a>
-    )}
+               {social && social.facebook && (
+              <a href={social.facebook} target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-facebook fa-2x"></i>
+              </a>
+            )}
+   
 {social && social.linkedin && (
      <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
      <i className="fab fa-linkedin fa-2x"></i>
