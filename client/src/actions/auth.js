@@ -39,9 +39,7 @@ export const register = ({
   email,
   password,
   avatar,
-  status,
-  subscribe,
-  readterms,
+
 }) => async (dispatch) => {
   const config = {
     headers: {
@@ -56,14 +54,10 @@ export const register = ({
     email,
     password,
     avatar,
-    status,
-    subscribe,
-    readterms,
+
   });
-  //console.log('auth body =', body);
   try {
     const res = await axios.post('/api/users', body, config);
-    //  console.log('res=', res);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -72,7 +66,6 @@ export const register = ({
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      // console.log('error.msg', errors);
 
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
       /*  errors.forEach((error) =>

@@ -22,18 +22,10 @@ const { json } = require('express');
 router.post(
   '/',
   [
-    check('firstname', 'Firstname is required, please enter it')
-      .not()
-      .isEmpty(),
-    //check('lastname', 'Lastname is required, please enter it').not().isEmpty(),
+    check('firstname', 'Firstname is required, please enter it').not().isEmpty(),
+    check('lastname', 'Lastname is required, please enter it').not().isEmpty(),
     check('email', 'Email is required, please enter a valid one').isEmail(),
-    check(
-      'readterms',
-      'Check Terms and condition have to be read please'
-    ).isIn([true]),
-    check('password', 'Password must have 6 characters at least').isLength({
-      min: 6,
-    }),
+    check('password', 'Password must have 6 characters at least').isLength({  min: 6,}),
   ],
 
   async (req, res) => {
@@ -44,11 +36,8 @@ router.post(
     const {
       firstname,
       lastname,
-      status,
       email,
       password,
-      subscribe,
-      readterms,
     } = req.body;
     try {
       //See if user exists
@@ -72,12 +61,10 @@ router.post(
       user = new User({
         firstname,
         lastname,
-        status,
         avatar,
         email,
         password,
-        subscribe,
-        readterms,
+ 
       });
 
       //Encrypt password
@@ -113,9 +100,7 @@ router.post(
   '/:id',
   [
     auth,
-    check('firstname', 'Firstname is required, please enter it')
-      .not()
-      .isEmpty(),
+    check('firstname', 'Firstname is required, please enter it') .not() .isEmpty(),
   ],
   (req, res) => {
     //  console.log('  reqbody', req.params.id);
@@ -124,10 +109,7 @@ router.post(
       return res.status(400).send(`No record with given id : ${req.params.id}`);
     var user = {
       firstname: req.body.firstname,
-      status: req.body.status,
       avatar: req.body.avatar,
-      subscribe: req.body.subscribe,
-      readterms: req.body.readterms,
       lastname: req.body.lastname,
       email: req.body.email,
     };
@@ -140,9 +122,7 @@ router.post(
         if (!err) {
           res.send(doc);
         } else {
-          console.log(
-            'Error in user update:' + JSON.stringify(err, undefined, 2)
-          );
+          console.log(  'Error in user update:' + JSON.stringify(err, undefined, 2));
         }
       }
     );
@@ -150,7 +130,6 @@ router.post(
 );
 
 router.get('/:id', (req, res) => {
-  console.log('get user by id', req.params.id);
   if (!ObjectId.isValid(req.params.id))
     return res.status(400).send(`No record with given id : ${req.params.id}`);
   User.findById(req.params.id, (err, doc) => {

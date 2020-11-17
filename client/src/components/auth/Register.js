@@ -20,9 +20,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     password: '',
     password2: '',
     avatar: '',
-    status: '',
-    readterms: false,
-    subscribe: false,
+ 
   });
   const {
     lastname,
@@ -56,9 +54,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         email,
         avatar,
         password,
-        status,
-        readterms,
-        subscribe,
+    
       });
     }
   };
@@ -128,65 +124,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             minLength='6'
           />
         </div>
-        <div className='form-group'>
-          <select name='status' value={status} onChange={(e) => onChange(e)}>
-            <option>--- Select a status ---</option>
-            <option value='Teacher'>Teacher</option>
-            <option value='Assistant'>Assistant</option>
-            <option value='Student'>Student</option>
-          </select>
-        </div>
+        
 
-        <div
-          className='form-group custom-control custom-checkbox custom-control-inline'
+      
+
          
-        >
-          <input
-            className='custom-control-input'
-            id='defaultInline1'
-            type='checkbox'
-            name='nomSub'
-            checked={formData.subscribe}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                subscribe: e.target.checked,
-              })
-            }
-          />
-
-          <label
-            className='custom-control-label'
-            htmlFor='defaultInline1'
-            style={{ marginLeft: 20 }}
-          >
-            Subcribe to our newsletter
-          </label>
-        </div>
-        <div
-          className='form-group custom-control custom-checkbox custom-control-inline'
-        >
-          <input
-            className='custom-control-input'
-            id='defaultInline2'
-            name='readterms'
-            type='checkbox'
-            checked={formData.readterms}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                readterms: e.target.checked,
-              })
-            }
-          />
-          <label
-            className='custom-control-label'
-            htmlFor='defaultInline2'
-            style={{ marginLeft: 20 }}
-          >
-            I have read terms and conditions
-          </label>
-        </div>
+     
+        
 
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
